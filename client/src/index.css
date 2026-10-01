@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #222;
+}
+
+.home {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 35px;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 35px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search-form input:focus {
+  border-color: #555;
+}
+
+.search-form button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-form button:hover {
+  opacity: 0.85;
+}
+
+.result-count {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.result-card {
+  background: white;
+  padding: 22px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.result-card h2 {
+  margin-bottom: 8px;
+}
+
+.result-card p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.url {
+  color: #16803c;
+  font-size: 14px;
+}
+
+.result-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  color: #777;
+}
+
+.status {
+  text-align: center;
+  color: #666;
+  margin-top: 30px;
+}
