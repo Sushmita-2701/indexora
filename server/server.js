@@ -6,12 +6,18 @@ const connectDB = require("./config/db");
 const searchRoutes = require("./routes/searchRoutes");
 const { buildIndex } = require("./search/searchEngine");
 
+const authRoutes = require("./routes/authRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
+
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
+
+app.use("/api/analytics", analyticsRoutes);
 
 connectDB();
 

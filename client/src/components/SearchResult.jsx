@@ -20,3 +20,5 @@ function SearchResult({ result }) {
 }
 
 export default SearchResult;
+
+

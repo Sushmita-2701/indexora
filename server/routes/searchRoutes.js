@@ -5,52 +5,73 @@ const {
   autocomplete,
 } = require("../search/searchEngine");
 
+const SearchHistory = require("../models/SearchHistory");
+
+const optionalAuth = require("../middleware/optionalAuth");
+
 const router = express.Router();
 
-// Autocomplete
-router.get("/autocomplete", (req, res) => {
+router.get("/autocomplete", async (req, res) => {
   try {
-    const query = req.query.q || "";
+    const { q } = req.query;
 
-    if (!query.trim()) {
+    if (!q) {
       return res.json([]);
     }
 
-    const suggestions = autocomplete(query);
+    const results = autocomplete(q);
 
-    res.json(suggestions);
+    res.json(results);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Autocomplete failed",
-      error: error.message,
     });
   }
 });
 
-// Search + Pagination
-router.get("/", async (req, res) => {
+router.get("/", optionalAuth, async (req, res) => {
   try {
-    const query = req.query.q;
+    const {
+      q,
+      page = 1,
+      limit = 10,
+    } = req.query;
 
-    if (!query) {
+    if (!q) {
       return res.status(400).json({
         message: "Search query is required",
       });
     }
 
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const startTime = Date.now();
 
-    const data = await search(query, page, limit);
+    const result = await search(
+      q,
+      Number(page),
+      Number(limit)
+    );
+
+    const executionTime =
+      Date.now() - startTime;
+
+    await SearchHistory.create({
+      user: req.user ? req.user.id : null,
+      query: q,
+      resultCount: result.total || 0,
+      executionTime,
+    });
 
     res.json({
-      query,
-      ...data,
+      ...result,
+      executionTime,
     });
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Search failed",
-      error: error.message,
     });
   }
 });
